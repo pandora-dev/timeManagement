@@ -16,7 +16,7 @@ public class AppLogic : MonoBehaviour {
 
     public void Start()
     {
-        
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         StartPauseButtonBehaviour = startPauseButton.GetComponent<TimerButtonBehaviour>();
     }
 
