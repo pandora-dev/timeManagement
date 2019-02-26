@@ -11,11 +11,14 @@ public class AppLogic : MonoBehaviour {
     public Button startPauseButton;
     public Timer timer;
     public TMPro.TextMeshProUGUI inputText;
+    public TMPro.TextMeshProUGUI latestFive;
+
     public Text buttonText;
     private TimerButtonBehaviour StartPauseButtonBehaviour;
 
     public void Start()
     {
+        Application.runInBackground = true;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         StartPauseButtonBehaviour = startPauseButton.GetComponent<TimerButtonBehaviour>();
     }
@@ -57,7 +60,6 @@ public class AppLogic : MonoBehaviour {
     {
         WWWForm form = new WWWForm();
         form.AddField("seconds", timer.seconds.ToString());
-
         form.AddField("row_record", inputText.text);
 
         using (UnityWebRequest www = UnityWebRequest.Post("https://www.arpandora.com/timeManagement/index.php/records/insert_raw_row/",form))
@@ -71,10 +73,16 @@ public class AppLogic : MonoBehaviour {
             else
             {
                 Debug.Log("Successfully posted!");
+
+
+                latestFive.text=www.downloadHandler.text.Replace("\\n","\n");
+                
             }
 
         }
     }
+
+
 
 
 
